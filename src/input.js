@@ -79,7 +79,7 @@ function inputCalendar (input, calendarOptions) {
   }
 
   function invalidateInput () {
-    if (!ignoreInvalidation && !isEmpty()) {
+    if (!ignoreInvalidation && !isEmpty() && o.autoSelectDate) {
       api.emitValues();
     }
   }

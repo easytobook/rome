@@ -38,6 +38,7 @@ function calendar (calendarOptions) {
   var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
+  var storedDate = moment()
 
   destroy(true);
 
@@ -309,7 +310,7 @@ function calendar (calendarOptions) {
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
-    update();
+    update(!o.autoSelectDate === true);
   }
 
   function update (silent) {
@@ -492,7 +493,7 @@ function calendar (calendarOptions) {
           className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
         if (data.selectable && day.date() === current) {
-          selectDayElement(node);
+          // selectDayElement(node);
         }
       }
     }
