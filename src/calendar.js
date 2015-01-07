@@ -63,6 +63,12 @@ function calendar (calendarOptions) {
     removeChildren(container);
     rendered = false;
     ref = o.initialValue ? o.initialValue : momentum.moment();
+    if (o.initialValue){
+      ref = o.initialValue;
+      storeDate();
+    } else {
+      ref = momentum.moment();
+    }
     refCal = ref.clone();
 
     api.container = container;
