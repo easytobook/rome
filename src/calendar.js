@@ -40,7 +40,6 @@ function calendar (calendarOptions) {
   var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
-  var storedDate = moment()
 
   destroy(true);
 
@@ -312,7 +311,7 @@ function calendar (calendarOptions) {
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
-    update(!o.autoSelectDate === true);
+    update(!o.autoSelectDate);
   }
 
   function update (silent) {
