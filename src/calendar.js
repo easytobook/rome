@@ -20,6 +20,8 @@ function calendar (calendarOptions) {
   var refCal;
   var container;
   var rendered = false;
+  var selectedMonth;
+  var selectedYear;
 
   // date variables
   var monthOffsetAttribute = 'data-rome-offset';
@@ -402,7 +404,13 @@ function calendar (calendarOptions) {
     api.emit('month', ref.month());
     api.emit('day', ref.day());
     api.emit('time', ref.format(o.timeFormat));
+    storeDate();
     return api;
+  }
+
+  function storeDate () {
+    selectedMonth = ref.month();
+    selectedYear = ref.year();
   }
 
   function refresh () {
@@ -493,7 +501,11 @@ function calendar (calendarOptions) {
           className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
         if (data.selectable && day.date() === current) {
-          // selectDayElement(node);
+          if (o.autoSelectDate) {
+            selectDayElement(node);
+          } else if (!o.autoSelectDate && selectedMonth === ref.month()  && selectedYear === ref.year()) {
+            selectDayElement(node);
+          }
         }
       }
     }

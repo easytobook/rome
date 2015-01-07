@@ -39,7 +39,6 @@ function defaults (options, cal) {
   } else {
     o.initialValue = parse(o.initialValue, o.inputFormat);
   }
-  if (o.storedValue === no) { o.storedValue = null }
   if (o.min === no) { o.min = null; } else { o.min = parse(o.min, o.inputFormat); }
   if (o.max === no) { o.max = null; } else { o.max = parse(o.max, o.inputFormat); }
   if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
