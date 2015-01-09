@@ -22,6 +22,7 @@ function calendar (calendarOptions) {
   var rendered = false;
   var selectedMonth;
   var selectedYear;
+  var intervalDates = [];
 
   // date variables
   var monthOffsetAttribute = 'data-rome-offset';
@@ -85,6 +86,7 @@ function calendar (calendarOptions) {
     api.restore = napi;
     api.setValue = setValue;
     api.show = show;
+    api.highlight = highlight;
 
     hideCalendar();
     eventListening();
@@ -116,6 +118,7 @@ function calendar (calendarOptions) {
     api.restore = init;
     api.setValue = napi;
     api.show = napi;
+    api.highlight = napi;
 
     if (silent !== true) {
       api.emit('destroyed');
@@ -267,6 +270,12 @@ function calendar (calendarOptions) {
   function hide () {
     hideTimeList();
     raf(hideCalendar);
+    return api;
+  }
+
+  function highlight (dates) {
+    intervalDates = dates;
+    update(true);
     return api;
   }
 
@@ -516,6 +525,15 @@ function calendar (calendarOptions) {
     }
 
     function validationTest (day, cell) {
+
+      if ( intervalDates.length == 2){
+        var diff1 = day.diff(intervalDates[0], 'days');
+        var diff2 = intervalDates[1].diff(day, 'days');
+        console.log(day.date(),diff1, diff2);
+        if ( diff1 >= 0 && diff2 >= 0) {
+          cell.push('rd-day-highlight');
+        }
+      }
       if (!isInRange(day, true, o.dateValidator)) { cell.push(disabled); }
       return cell;
     }
