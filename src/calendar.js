@@ -363,13 +363,13 @@ function calendar (calendarOptions) {
 
   function updateCalendarSelection () {
     var day = refCal.date() - 1;
-    selectDayElement(false);
+    // selectDayElement(false);
     calendarMonths.forEach(function (cal) {
       var days;
       if (sameCalendarMonth(cal.date, refCal)) {
         days = cast(cal.body.children).map(aggregate);
         days = Array.prototype.concat.apply([], days).filter(inside);
-        selectDayElement(days[day]);
+        // selectDayElement(days[day]);
       }
     });
 
@@ -413,12 +413,13 @@ function calendar (calendarOptions) {
   }
 
   function emitValues () {
+    storeDate();
     api.emit('data', getDateString());
     api.emit('year', ref.year());
     api.emit('month', ref.month());
     api.emit('day', ref.day());
     api.emit('time', ref.format(o.timeFormat));
-    storeDate();
+
     return api;
   }
 
@@ -525,12 +526,12 @@ function calendar (calendarOptions) {
     }
 
     function validationTest (day, cell) {
-      if ( intervalDates.length == 2){
-        if (day.isSame(intervalDates[0]) || day.isSame(intervalDates[1])) {
-          cell.push('rd-day-highlight');
-        }
+      if (intervalDates[0] !== null && intervalDates[1] !== null ){
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
-          cell.push('rd-day-highlight');
+          cell.push('rd-day-selected');
+        }
+        if (intervalDates[1].diff(day, 'days') === 0) {
+          cell.push('rd-day-selected');
         }
       }
       if (!isInRange(day, true, o.dateValidator)) { cell.push(disabled); }
@@ -612,7 +613,7 @@ function calendar (calendarOptions) {
     if (prev || next) {
       ref.add(prev ? -1 : 1, 'months');
     }
-    selectDayElement(target);
+    // selectDayElement(target);
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
