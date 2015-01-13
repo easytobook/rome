@@ -291,14 +291,11 @@ function calendar (calendarOptions) {
 
   function calendarEventTarget (e) {
     var target = e.target;
-    if (target === api.associated) {
+    if (target === o.trigger || isDescendant(o.trigger, target) || isDescendant(container, target)) {
       return true;
     }
-    while (target) {
-      if (target === container) {
-        return true;
-      }
-      target = target.parentNode;
+    if (target === api.associated) {
+      return true;
     }
   }
 
@@ -314,6 +311,17 @@ function calendar (calendarOptions) {
       return;
     }
     hideConditionally();
+  }
+
+  function isDescendant(parent, child) {
+     var node = child.parentNode;
+     while (node != null) {
+      if (node == parent) {
+        return true;
+      }
+      node = node.parentNode;
+     }
+     return false;
   }
 
   function subtractMonth () { changeMonth('subtract'); }
@@ -527,6 +535,7 @@ function calendar (calendarOptions) {
 
     function validationTest (day, cell) {
       if (intervalDates[0] !== null && intervalDates[1] !== null ){
+        day = day.seconds(0);
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
           cell.push('rd-day-selected');
         }
