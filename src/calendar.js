@@ -622,7 +622,7 @@ function calendar (calendarOptions) {
     if (prev || next) {
       ref.add(prev ? -1 : 1, 'months');
     }
-    // selectDayElement(target);
+    selectDayElement(target);
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
