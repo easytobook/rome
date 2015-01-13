@@ -22,7 +22,7 @@ function calendar (calendarOptions) {
   var rendered = false;
   var selectedMonth;
   var selectedYear;
-  var intervalDates = [];
+  var intervalDates = calendarOptions.intervalDates || [];
 
   // date variables
   var monthOffsetAttribute = 'data-rome-offset';
@@ -525,12 +525,11 @@ function calendar (calendarOptions) {
     }
 
     function validationTest (day, cell) {
-
       if ( intervalDates.length == 2){
-        var diff1 = day.diff(intervalDates[0], 'days');
-        var diff2 = intervalDates[1].diff(day, 'days');
-        console.log(day.date(),diff1, diff2);
-        if ( diff1 >= 0 && diff2 >= 0) {
+        if (day.isSame(intervalDates[0]) || day.isSame(intervalDates[1])) {
+          cell.push('rd-day-highlight');
+        }
+        if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
           cell.push('rd-day-highlight');
         }
       }
