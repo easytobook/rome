@@ -528,11 +528,11 @@ function calendar (calendarOptions) {
 
     function validationTest (day, cell) {
       if (intervalDates[0] !== null && intervalDates[1] !== null ){
-        day = day.seconds(0);
+        day = day.startOf('day');
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
           cell.push('rd-day-selected');
         }
-        if (intervalDates[0].diff(day, 'days') === 0) {
+        if (day.diff(intervalDates[0], 'days') === 0) {
           cell.push('rd-day-selected');
         }
         if (intervalDates[1].diff(day, 'days') === 0) {
