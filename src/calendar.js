@@ -523,13 +523,6 @@ function calendar (calendarOptions) {
           text: day.format(o.dayFormat),
           className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
-        if (data.selectable && day.date() === current) {
-          if (o.autoSelectDate) {
-            selectDayElement(node);
-          } else if (!o.autoSelectDate && selectedMonth === ref.month()  && selectedYear === ref.year()) {
-            selectDayElement(node);
-          }
-        }
       }
     }
 
@@ -537,6 +530,9 @@ function calendar (calendarOptions) {
       if (intervalDates[0] !== null && intervalDates[1] !== null ){
         day = day.seconds(0);
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
+          cell.push('rd-day-selected');
+        }
+        if (intervalDates[0].diff(day, 'days') === 0) {
           cell.push('rd-day-selected');
         }
         if (intervalDates[1].diff(day, 'days') === 0) {
@@ -622,7 +618,7 @@ function calendar (calendarOptions) {
     if (prev || next) {
       ref.add(prev ? -1 : 1, 'months');
     }
-    selectDayElement(target);
+    // selectDayElement(target);
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
@@ -631,13 +627,9 @@ function calendar (calendarOptions) {
   }
 
   function selectDayElement (node) {
-    if (lastDayElement) {
-      classes.remove(lastDayElement, o.styles.selectedDay);
-    }
     if (node) {
       classes.add(node, o.styles.selectedDay);
     }
-    lastDayElement = node;
   }
 
   function getMonthOffset (elem) {
