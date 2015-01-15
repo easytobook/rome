@@ -177,10 +177,10 @@ function calendar (calendarOptions) {
     function renderMonth (i) {
       var month = dom({ className: o.styles.month, parent: datewrapper });
       if (i === 0) {
-        back = dom({ type: 'button', className: o.styles.back, attributes: { type: 'button' }, parent: month });
+        back = dom({ type: 'span', className: o.styles.back, parent: month, innerHTML: o.html.back });
       }
       if (i === o.monthsInCalendar -1) {
-        next = dom({ type: 'button', className: o.styles.next, attributes: { type: 'button' }, parent: month });
+        next = dom({ type: 'span', className: o.styles.next, parent: month, innerHTML: o.html.next });
       }
       var label = dom({ className: o.styles.monthLabel, parent: month });
       var date = dom({ type: 'table', className: o.styles.dayTable, parent: month });
@@ -532,10 +532,7 @@ function calendar (calendarOptions) {
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
           cell.push('rd-day-selected');
         }
-        if (day.diff(intervalDates[0], 'days') === 0) {
-          cell.push('rd-day-selected');
-        }
-        if (intervalDates[1].diff(day, 'days') === 0) {
+        if (day.diff(intervalDates[0], 'days') === 0  || intervalDates[1].diff(day, 'days') === 0) {
           cell.push('rd-day-selected');
         }
       }

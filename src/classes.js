@@ -4,7 +4,9 @@ var trim = /^\s+|\s+$/g;
 var whitespace = /\s+/;
 
 function classes (node) {
-  return node.className.replace(trim, '').split(whitespace);
+  if (typeof node.className == 'string'){
+    return node.className.replace(trim, '').split(whitespace);
+  }
 }
 
 function set (node, value) {
@@ -28,6 +30,7 @@ function remove (node, value) {
 }
 
 function contains (node, value) {
+  if (!classes(node)) { return false; }
   return classes(node).indexOf(value) !== -1;
 }
 
