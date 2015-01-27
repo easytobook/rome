@@ -256,8 +256,15 @@ function calendar (calendarOptions) {
 
   function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
   function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
-  function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
-  function hideCalendar () { container.style.display = 'none'; api.emit('hide'); }
+  function showCalendar () {
+    classes.remove(container, o.styles.hiddenContainerClass);
+    classes.add(container, o.styles.visibleContainerClass);
+    api.emit('show');
+  }
+  function hideCalendar () {
+    classes.add(container, o.styles.hiddenContainerClass);
+    classes.remove(container, o.styles.visibleContainerClass);
+    api.emit('hide'); }
 
   function show () {
     render();
