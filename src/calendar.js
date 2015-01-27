@@ -540,7 +540,12 @@ function calendar (calendarOptions) {
           cell.push('rd-day-selected');
           cell.push('rd-day-highlighted');
         }
-        if (day.diff(intervalDates[0], 'days') === 0  || intervalDates[1].diff(day, 'days') === 0) {
+        if ( day.diff(intervalDates[0], 'days') === 0 ) {
+          cell.push('rd-day-checkin');
+          cell.push('rd-day-selected');
+        }
+        if ( intervalDates[1].diff(day, 'days') === 0) {
+          cell.push('rd-day-checkout');
           cell.push('rd-day-selected');
         }
       }
