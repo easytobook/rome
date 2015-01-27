@@ -538,6 +538,7 @@ function calendar (calendarOptions) {
         day = day.startOf('day');
         if (day.isAfter(intervalDates[0]) && day.isBefore(intervalDates[1])) {
           cell.push('rd-day-selected');
+          cell.push('rd-day-highlighted');
         }
         if (day.diff(intervalDates[0], 'days') === 0  || intervalDates[1].diff(day, 'days') === 0) {
           cell.push('rd-day-selected');
